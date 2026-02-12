@@ -46,19 +46,19 @@
         <div class="mask-layer-light"></div>
         <div class="vision-container">
           <!-- 模块 1 -->
-          <div class="vision-card fade-in-up">
+          <div class="vision-card">
             <el-icon class="vision-icon"><Cpu /></el-icon>
             <h3>技术驱动 <span class="en">TECHNOLOGY</span></h3>
             <p>探索科技边界，赋能产业升级</p>
           </div>
           <!-- 模块 2 -->
-          <div class="vision-card fade-in-up delay-200">
+          <div class="vision-card">
             <el-icon class="vision-icon"><Service /></el-icon>
-            <h3>咨询服务 <span class="en">CONSULTING</span></h3>
+            <h3>热忱服务 <span class="en">CONSULTING</span></h3>
             <p>专业的视角，为您提供深度解决方案</p>
           </div>
           <!-- 模块 3 -->
-          <div class="vision-card fade-in-up delay-400">
+          <div class="vision-card">
             <el-icon class="vision-icon"><TrendCharts /></el-icon>
             <h3>持续创新 <span class="en">INNOVATION</span></h3>
             <p>追求卓越，与客户共同成长</p>
@@ -70,7 +70,7 @@
       <swiper-slide class="swiper-slide main-slide slide-contact">
         <div class="contact-wrapper">
           <div class="contact-left">
-            <div class="contact-content fade-in-up">
+            <div class="contact-content">
               <h2>CONTACT US</h2>
               <h3>中山市盛裕科技有限公司</h3>
               <p class="en-name">Zhongshan Shengyu Technology Co., Ltd.</p>
@@ -93,7 +93,7 @@
       <!-- Footer -->
       <swiper-slide class="swiper-slide footer-slide">
         <div class="footer-container">
-          <p class="copyright">Copyright © 2026 科建股份 版权所有</p>
+          <p class="copyright">Copyright © 2021 - 2026 中山市盛裕科技有限公司 版权所有</p>
           <div class="beian-info">
             <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">粤ICP备2024000001号</a>
             <span class="divider">|</span>
@@ -353,6 +353,7 @@ onMounted(() => {
     align-items: center;
   }
 
+  /* 初始状态：隐藏且下沉 */
   .vision-card {
     flex: 1;
     display: flex;
@@ -360,10 +361,13 @@ onMounted(() => {
     align-items: center;
     text-align: center;
     padding: 0 20px;
-    transition: transform 0.3s ease;
+    
+    opacity: 0;
+    transform: translateY(50px); /* 加大位移 */
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
     &:hover {
-      transform: translateY(-10px);
+      /* 暂时移除 hover 位移，避免混淆 */
       
       .vision-icon {
         color: #E0C38C;
@@ -399,6 +403,15 @@ onMounted(() => {
       opacity: 0.8;
       max-width: 280px;
     }
+  }
+
+  /* 激活状态：依次浮现 */
+  &.swiper-slide-active .vision-card {
+    opacity: 1;
+    transform: translateY(0);
+    
+    &:nth-child(2) { transition-delay: 0.2s; }
+    &:nth-child(3) { transition-delay: 0.4s; }
   }
 }
 
@@ -521,7 +534,7 @@ onMounted(() => {
 /* Footer (保持之前的样式) */
 .footer-slide {
   height: auto !important;
-  background-color: #0161ad;
+  background-color: #000;
   color: #fff;
   padding: 15px 0;
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
