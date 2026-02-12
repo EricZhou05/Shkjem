@@ -3,27 +3,20 @@
     <el-container>
       <el-header>
         <div class="logo">
-          <img src="./assets/img/toplogo.png" alt />
+          <img src="./assets/img/toplogo.png" alt="logo" />
         </div>
         <el-menu
-          :default-active="defaultActive"
+          default-active="1"
           class="el-menu-demo"
           mode="horizontal"
-          @select="handleSelect"
-          :router="router"
         >
-          <el-menu-item index="/">首页</el-menu-item>
-          <el-menu-item index="/news">新闻资讯</el-menu-item>
-          <el-menu-item index="/product">产品中心</el-menu-item>
-          <el-menu-item index="/case">经典案例</el-menu-item>
-          <el-menu-item index="/goin">走进科建</el-menu-item>
-          <el-menu-item index="/download">下载APP</el-menu-item>
+          <el-menu-item index="1">首页</el-menu-item>
         </el-menu>
       </el-header>
       <el-main>
-        <router-view />
+        <Home />
       </el-main>
-      <div class="footer" v-show="isShow">
+      <div class="footer">
         <div class="footer-content">
           <ul class="content-nav">
             <li>
@@ -52,7 +45,7 @@
               <span>地址：上海市杨浦区翔殷路128号12号楼101</span>
             </li>
           </ul>
-          <img src="./assets/img/ercode.png" alt />
+          <img src="./assets/img/ercode.png" alt="qr-code" />
         </div>
         <div class="copyright">
           <span>科建版权所有</span>
@@ -62,22 +55,8 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      router: true,
-      defaultActive: "/",
-      isShow: false
-    };
-  },
-  methods: {
-    handleSelect(key) {
-      this.isShow = this.defaultActive != key;
-      window.console.log(this.isShow);
-    }
-  }
-};
+<script setup>
+import Home from './views/Home.vue'
 </script>
 
 <style lang="scss">
@@ -100,17 +79,17 @@ body {
 .el-header {
   display: flex;
   justify-content: space-between;
-  align-content: center;
+  align-items: center;
   width: 1240px;
   margin: 0 auto;
-  //background-color: #fff;
+  height: 60px;
 
   .logo {
     width: 280px;
     padding: 10px;
     img {
       width: 100%;
-      line-height: 60px;
+      display: block;
     }
   }
 }
@@ -136,7 +115,6 @@ body {
         display: flex;
         flex-direction: column;
         padding: 0 20px;
-        //justify-content: center;
         align-items: flex-start;
         p {
           font-size: 20px;
@@ -159,6 +137,7 @@ body {
   .copyright {
     height: 30px;
     background: #125688;
+    text-align: center;
     span {
       color: #fff;
       line-height: 30px;
