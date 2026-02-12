@@ -139,12 +139,11 @@ onMounted(async () => {
   height: auto !important;
   background-color: #0161ad;
   color: #fff;
-  padding: 30px 0; /* 缩减高度 */
+  padding: 15px 0; /* 保持紧凑高度 */
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
   
-  /* 新增：区分顶部的阴影和边框 */
-  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.15);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  /* 修改：极轻微的顶部内阴影，仅产生细腻的层级分界 */
+  box-shadow: inset 0 4px 6px -1px rgba(0, 0, 0, 0.15);
   position: relative;
   z-index: 10;
   
@@ -155,9 +154,9 @@ onMounted(async () => {
 
     .copyright {
       color: rgba(255, 255, 255, 0.9);
-      font-size: 14px;
+      font-size: 12px; /* 字体调小 */
       font-weight: 400;
-      margin-bottom: 12px;
+      margin-bottom: 5px; /* 间距调小 */
     }
     
     .beian-info {
@@ -177,7 +176,7 @@ onMounted(async () => {
         /* 仅超链接添加悬浮效果 */
         &:hover {
           color: #fff;
-          transform: translateY(-3px);
+          transform: translateY(-2px); /* 上浮幅度微调 */
           text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
       }
