@@ -2,14 +2,14 @@
   <div class="home" v-loading="loading">
     <swiper
       :direction="'vertical'"
-      :slidesPerView="1"
+      :slidesPerView="'auto'"
       :mousewheel="true"
       :pagination="{ clickable: true }"
       :modules="modules"
       class="mySwiper"
       :style="{ height: swiperHeight + 'px' }"
     >
-      <swiper-slide class="swiper-slide slide-one">
+      <swiper-slide class="swiper-slide slide-one main-slide">
         <div class="page">
           <h3>科建股份</h3>
           <p>KeJian Stock</p>
@@ -17,7 +17,7 @@
         <p class="slogan">立人立己 达人达己</p>
       </swiper-slide>
       
-      <swiper-slide class="swiper-slide slide-two">
+      <swiper-slide class="swiper-slide slide-two main-slide">
         <div class="page">
           <h3>经典案例</h3>
           <p>Successful Case</p>
@@ -39,7 +39,7 @@
         </ul>
       </swiper-slide>
 
-      <swiper-slide class="swiper-slide slide-three">
+      <swiper-slide class="swiper-slide slide-three main-slide">
         <div class="page">
           <h3>最新资讯</h3>
           <p>Latest News</p>
@@ -59,6 +59,16 @@
               <p>{{ news.Content }}</p>
               <span>{{ news.CreateTime }}</span>
             </div>
+          </div>
+        </div>
+      </swiper-slide>
+
+      <swiper-slide class="swiper-slide footer-slide">
+        <div class="footer-container">
+          <p>Copyright © 2026 科建股份 版权所有</p>
+          <div class="beian">
+            <span>沪ICP备2023000000号-1</span>
+            <span class="police-beian">沪公网安备 31011002000000号</span>
           </div>
         </div>
       </swiper-slide>
@@ -117,24 +127,62 @@ onMounted(async () => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  
+  // 核心修改：主页面强制全高
+  &.main-slide {
+    height: 100% !important;
+  }
+}
 
-  .page {
+.footer-slide {
+  height: auto !important; // Footer 高度自适应
+  background-color: #125688;
+  color: #fff;
+  padding: 20px 0;
+  
+  .footer-container {
     text-align: center;
-    height: 100px;
-    h3,
+    font-size: 14px;
+    
     p {
-      font-size: 40px;
-      font-weight: 400;
-      color: #fff;
+      margin-bottom: 10px;
+    }
+    
+    .beian {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      
+      span {
+        cursor: pointer;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+      
+      .police-beian {
+        // 如果有图标可以在这里加 before 伪元素
+      }
     }
   }
+}
 
-  .slogan {
-    text-align: center;
-    font-size: 50px;
+.page {
+  text-align: center;
+  height: 100px;
+  h3,
+  p {
+    font-size: 40px;
+    font-weight: 400;
     color: #fff;
-    padding: 30px 0;
   }
+}
+
+.slogan {
+  text-align: center;
+  font-size: 50px;
+  color: #fff;
+  padding: 30px 0;
 }
 
 .case-item {
