@@ -95,9 +95,9 @@
         <div class="footer-container">
           <p class="copyright">Copyright © 2021 - 2026 中山市盛裕科技有限公司 版权所有</p>
           <div class="beian-info">
-            <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">粤ICP备2024000001号</a>
+            <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">粤ICP备2026xxxxxx号</a>
             <span class="divider">|</span>
-            <span class="police-beian">粤公网安备 44030002000001号</span>
+            <span class="police-beian">粤公网安备 44030002xxxxxx号</span>
           </div>
         </div>
       </swiper-slide>
@@ -457,7 +457,7 @@ onMounted(() => {
     width: 100%;
     max-width: 600px;
     min-width: 600px; /* 核心修复：固定最小宽度，防止换行跳动 */
-    padding: 0 100px;
+    padding: 0 35px;
     box-sizing: border-box;
 
     h2, h3, .en-name, .info-item {
@@ -534,7 +534,7 @@ onMounted(() => {
 /* Footer (保持之前的样式) */
 .footer-slide {
   height: auto !important;
-  background-color: #000;
+  background-color: #0f1c2e;
   color: #fff;
   padding: 15px 0;
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
