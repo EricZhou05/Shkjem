@@ -2,6 +2,7 @@
   "name": "eduzone-reborn",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -16,7 +17,12 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.5.0",
+    "rollup-plugin-visualizer": "^6.0.5",
     "sass": "^1.69.5",
-    "vite": "^5.0.0"
+    "terser": "^5.46.0",
+    "unplugin-auto-import": "^21.0.0",
+    "unplugin-vue-components": "^31.0.0",
+    "vite": "^5.0.0",
+    "vite-plugin-compression": "^0.5.1"
   }
 }

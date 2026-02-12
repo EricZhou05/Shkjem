@@ -1,12 +1,8 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import axios from 'axios'
-import ElementPlus from 'element-plus'
-import 'element-plus/dist/index.css'
 
 const app = createApp(App)
-
-app.use(ElementPlus)
 
 // 设置超时时间
 axios.defaults.timeout = 5000
