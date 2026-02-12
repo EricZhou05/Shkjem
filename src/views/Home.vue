@@ -272,10 +272,10 @@ onMounted(() => {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.4); /* 最终压暗程度 */
+  background: rgba(0, 0, 0, 0.5); /* 加深压暗程度 */
   z-index: 2;
   opacity: 0;
-  animation: maskFadeIn 1.5s ease-out forwards;
+  animation: maskFadeIn 1s ease-out forwards;
   animation-delay: 1s;
 }
 
@@ -410,25 +410,53 @@ onMounted(() => {
     display: flex;
     width: 100%;
     height: 100%;
+    overflow: hidden; /* 防止动画溢出 */
   }
 
   .contact-left {
-    flex: 1;
+    width: 0;
+    opacity: 0;
     background-color: #0f1c2e;
     display: flex;
-    justify-content: center;
+    justify-content: center; /* 居中内容 */
     align-items: center;
-    padding: 0 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    
+    /* 移除延迟，增加时长至 1.8s */
+    transition: all 2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* 当 Slide 激活时 */
+  &.swiper-slide-active .contact-left {
+    width: 50%;
+    opacity: 1;
+  }
+
+  &.swiper-slide-active .contact-content {
+    h2, h3, .en-name, .info-item {
+      opacity: 1;
+      /* 移除 transform */
+    }
   }
 
   .contact-content {
     width: 100%;
     max-width: 600px;
+    min-width: 600px; /* 核心修复：固定最小宽度，防止换行跳动 */
+    padding: 0 100px;
+    box-sizing: border-box;
+
+    h2, h3, .en-name, .info-item {
+      opacity: 0;
+      /* 移除 transform，只保留透明度渐变 */
+      transition: opacity 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
 
     h2 {
       font-size: 80px;
       font-weight: 900;
-      color: rgba(255,255,255,0.05); /* 水印效果 */
+      color: rgba(255,255,255,0.05);
       margin-bottom: -40px;
       margin-left: -5px;
     }
@@ -437,6 +465,7 @@ onMounted(() => {
       font-size: 32px;
       font-weight: 600;
       margin-bottom: 10px;
+      white-space: normal;
     }
 
     .en-name {
@@ -445,6 +474,7 @@ onMounted(() => {
       opacity: 0.5;
       margin-bottom: 60px;
       text-transform: uppercase;
+      white-space: normal;
     }
 
     .info-item {
@@ -464,6 +494,7 @@ onMounted(() => {
         font-size: 18px;
         font-weight: 300;
         letter-spacing: 1px;
+        white-space: normal;
       }
     }
   }
@@ -473,6 +504,8 @@ onMounted(() => {
     background-position: center;
     background-size: cover;
     position: relative;
+    /* 移除延迟，增加时长 */
+    transition: all 1.8s cubic-bezier(0.16, 1, 0.3, 1);
     
     .overlay {
       position: absolute;
@@ -480,7 +513,7 @@ onMounted(() => {
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(15, 28, 46, 0.3); /* 统一色调 */
+      background: rgba(0, 0, 0, 0.6);
     }
   }
 }
