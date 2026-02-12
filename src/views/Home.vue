@@ -21,7 +21,6 @@
       :direction="'vertical'"
       :slidesPerView="'auto'"
       :mousewheel="true"
-      :pagination="{ clickable: true }"
       :modules="modules"
       class="mySwiper"
       :style="{ height: swiperHeight + 'px' }"
@@ -109,7 +108,7 @@
 <script setup>
 import { ref, onMounted, getCurrentInstance } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Mousewheel, Pagination } from 'swiper/modules'
+import { Mousewheel } from 'swiper/modules'
 import { Monitor, Cpu, Service, TrendCharts } from '@element-plus/icons-vue'
 
 // Import Assets
@@ -119,12 +118,11 @@ import imgHomeAnli from '@/assets/img/home_anli.jpg'
 
 // Import Swiper styles
 import 'swiper/css'
-import 'swiper/css/pagination'
 
 const { proxy } = getCurrentInstance()
 const imgserver = proxy.imgserver
 
-const modules = [Mousewheel, Pagination]
+const modules = [Mousewheel]
 const swiperHeight = ref(window.innerHeight)
 const swiperInstance = ref(null)
 const activeMenuIndex = ref('0')
