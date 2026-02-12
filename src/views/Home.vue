@@ -1,5 +1,5 @@
 <template>
-  <div class="home" v-loading="loading">
+  <div class="home">
     <swiper
       :direction="'vertical'"
       :slidesPerView="'auto'"
@@ -9,60 +9,70 @@
       class="mySwiper"
       :style="{ height: swiperHeight + 'px' }"
     >
-      <swiper-slide class="swiper-slide slide-one main-slide">
-        <div class="page">
-          <h3>科建股份</h3>
-          <p>KeJian Stock</p>
+      <!-- 第一页：品牌形象 -->
+      <swiper-slide class="swiper-slide main-slide slide-brand">
+        <!-- 背景层 -->
+        <div class="bg-layer" :style="{ backgroundImage: 'url(' + imgHomeTop + ')' }"></div>
+        <!-- 压暗蒙版 -->
+        <div class="mask-layer"></div>
+        <!-- 内容层 -->
+        <div class="content-layer">
+          <h1 class="main-title fade-in-up">中山市盛裕科技有限公司</h1>
+          <h2 class="sub-title fade-in-up delay-200">智汇盛世 · 裕见未来</h2>
         </div>
-        <p class="slogan">立人立己 达人达己</p>
       </swiper-slide>
       
-      <swiper-slide class="swiper-slide slide-two main-slide">
-        <div class="page">
-          <h3>经典案例</h3>
-          <p>Successful Case</p>
-        </div>
-        <ul class="case-item">
-          <li
-            v-for="(item, index) in caseList"
-            :key="index"
-            :style="{ backgroundImage: 'url(' + imgserver + item.Img + ')' }"
-          >
-            <div class="case-item-hover">
-              <p class="hover-title">{{ item.Title }}</p>
-              <div class="bottom"></div>
-              <div class="more">
-                <span>MORE</span>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </swiper-slide>
-
-      <swiper-slide class="swiper-slide slide-three main-slide">
-        <div class="page">
-          <h3>最新资讯</h3>
-          <p>Latest News</p>
-        </div>
-        <div class="news-content">
-          <div class="news-content-item" v-for="(news, i) in newsList" :key="i">
-            <div :style="'order: ' + (i % 2 == 0 ? 1 : 3)">
-              <div class="item-img" :style="{ backgroundImage: 'url(' + imgserver + news.Img + ')' }"></div>
-            </div>
-            <div style="order: 2">
-              <el-divider>
-                <el-icon><Monitor /></el-icon>
-              </el-divider>
-            </div>
-            <div class="item-content" :style="'order: ' + (i % 2 == 0 ? 3 : 1)">
-              <h3>{{ news.Title }}</h3>
-              <p>{{ news.Content }}</p>
-              <span>{{ news.CreateTime }}</span>
-            </div>
+      <!-- 第二页：企业愿景 -->
+      <swiper-slide class="swiper-slide main-slide slide-vision">
+        <div class="bg-layer" :style="{ backgroundImage: 'url(' + imgBgTop + ')' }"></div>
+        <div class="mask-layer-light"></div>
+        <div class="vision-container">
+          <!-- 模块 1 -->
+          <div class="vision-card fade-in-up">
+            <el-icon class="vision-icon"><Cpu /></el-icon>
+            <h3>技术驱动 <span class="en">TECHNOLOGY</span></h3>
+            <p>探索科技边界，赋能产业升级</p>
+          </div>
+          <!-- 模块 2 -->
+          <div class="vision-card fade-in-up delay-200">
+            <el-icon class="vision-icon"><Service /></el-icon>
+            <h3>咨询服务 <span class="en">CONSULTING</span></h3>
+            <p>专业的视角，为您提供深度解决方案</p>
+          </div>
+          <!-- 模块 3 -->
+          <div class="vision-card fade-in-up delay-400">
+            <el-icon class="vision-icon"><TrendCharts /></el-icon>
+            <h3>持续创新 <span class="en">INNOVATION</span></h3>
+            <p>追求卓越，与客户共同成长</p>
           </div>
         </div>
       </swiper-slide>
 
+      <!-- 第三页：联系我们 -->
+      <swiper-slide class="swiper-slide main-slide slide-contact">
+        <div class="contact-wrapper">
+          <div class="contact-left">
+            <div class="contact-content fade-in-up">
+              <h2>CONTACT US</h2>
+              <h3>中山市盛裕科技有限公司</h3>
+              <p class="en-name">Zhongshan Shengyu Technology Co., Ltd.</p>
+              <div class="info-item">
+                <span class="label">地址 / Add</span>
+                <span class="val">广东省中山市东区长江路33号五层05号房A05卡</span>
+              </div>
+              <div class="info-item">
+                <span class="label">邮箱 / Email</span>
+                <span class="val">duanxiaoling@xiao100.com</span>
+              </div>
+            </div>
+          </div>
+          <div class="contact-right" :style="{ backgroundImage: 'url(' + imgHomeAnli + ')' }">
+            <div class="overlay"></div>
+          </div>
+        </div>
+      </swiper-slide>
+
+      <!-- Footer -->
       <swiper-slide class="swiper-slide footer-slide">
         <div class="footer-container">
           <p class="copyright">Copyright © 2026 科建股份 版权所有</p>
@@ -81,7 +91,12 @@
 import { ref, onMounted, getCurrentInstance } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Mousewheel, Pagination } from 'swiper/modules'
-import { Monitor } from '@element-plus/icons-vue'
+import { Monitor, Cpu, Service, TrendCharts } from '@element-plus/icons-vue'
+
+// Import Assets
+import imgHomeTop from '@/assets/img/home_top.jpg'
+import imgBgTop from '@/assets/img/bgtop.jpg'
+import imgHomeAnli from '@/assets/img/home_anli.jpg'
 
 // Import Swiper styles
 import 'swiper/css'
@@ -89,74 +104,291 @@ import 'swiper/css/pagination'
 
 const { proxy } = getCurrentInstance()
 const imgserver = proxy.imgserver
-const $http = proxy.$http
 
 const modules = [Mousewheel, Pagination]
-const loading = ref(true)
-const caseList = ref([])
-const newsList = ref([])
-const swiperHeight = ref(window.innerHeight - 60)
+const swiperHeight = ref(window.innerHeight)
 
-onMounted(async () => {
-  try {
-    const [responseCases, responseNews] = await Promise.all([
-      $http.get("Cases/GetCasesAll"),
-      $http.get("News?type=1&num=3")
-    ])
-    caseList.value = responseCases.data
-    newsList.value = responseNews.data
-  } catch (error) {
-    console.error('Failed to fetch data:', error)
-  } finally {
-    loading.value = false
-  }
-
+// 响应式调整高度
+onMounted(() => {
   window.addEventListener('resize', () => {
-    swiperHeight.value = window.innerHeight - 60
+    swiperHeight.value = window.innerHeight
   })
 })
 </script>
 
 <style lang="scss" scoped>
+/* 全局基础设置 */
+.home {
+  font-family: "Source Han Sans CN", "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: #fff;
+}
+
 .mySwiper {
   width: 100%;
 }
 
 .swiper-slide {
-  font-size: 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  position: relative;
+  overflow: hidden;
   
-  // 核心修改：主页面强制全高
   &.main-slide {
     height: 100% !important;
   }
 }
 
+/* 通用背景层 */
+.bg-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+/* 蒙版层与动画 */
+.mask-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4); /* 最终压暗程度 */
+  z-index: 2;
+  opacity: 0;
+  animation: maskFadeIn 1.5s ease-out forwards;
+  animation-delay: 1s;
+}
+
+.mask-layer-light {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 2;
+}
+
+@keyframes maskFadeIn {
+  to { opacity: 1; }
+}
+
+/* 动画工具类 */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.delay-200 { animation-delay: 0.2s; }
+.delay-400 { animation-delay: 0.4s; }
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 第一页：品牌形象 */
+.slide-brand {
+  .content-layer {
+    position: relative;
+    z-index: 3;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .main-title {
+    font-size: 64px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+    text-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  }
+
+  .sub-title {
+    font-size: 24px;
+    font-weight: 300;
+    letter-spacing: 12px;
+    color: #E0C38C; /* 淡金色 */
+    text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  }
+}
+
+/* 第二页：企业愿景 */
+.slide-vision {
+  .vision-container {
+    position: relative;
+    z-index: 3;
+    height: 100%;
+    width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .vision-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-10px);
+      
+      .vision-icon {
+        color: #E0C38C;
+        transform: scale(1.1);
+      }
+    }
+
+    .vision-icon {
+      font-size: 48px;
+      margin-bottom: 30px;
+      transition: all 0.3s ease;
+    }
+
+    h3 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      
+      .en {
+        display: block;
+        font-size: 12px;
+        font-weight: 400;
+        letter-spacing: 2px;
+        margin-top: 5px;
+        opacity: 0.6;
+      }
+    }
+
+    p {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.6;
+      opacity: 0.8;
+      max-width: 280px;
+    }
+  }
+}
+
+/* 第三页：联系我们 */
+.slide-contact {
+  background-color: #0f1c2e;
+
+  .contact-wrapper {
+    display: flex;
+    width: 100%;
+    height: 100%;
+  }
+
+  .contact-left {
+    flex: 1;
+    background-color: #0f1c2e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 100px;
+  }
+
+  .contact-content {
+    width: 100%;
+    max-width: 600px;
+
+    h2 {
+      font-size: 80px;
+      font-weight: 900;
+      color: rgba(255,255,255,0.05); /* 水印效果 */
+      margin-bottom: -40px;
+      margin-left: -5px;
+    }
+
+    h3 {
+      font-size: 32px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .en-name {
+      font-size: 14px;
+      letter-spacing: 1px;
+      opacity: 0.5;
+      margin-bottom: 60px;
+      text-transform: uppercase;
+    }
+
+    .info-item {
+      margin-bottom: 30px;
+      display: flex;
+      flex-direction: column;
+
+      .label {
+        font-size: 12px;
+        color: #E0C38C;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .val {
+        font-size: 18px;
+        font-weight: 300;
+        letter-spacing: 1px;
+      }
+    }
+  }
+
+  .contact-right {
+    flex: 1;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 28, 46, 0.3); /* 统一色调 */
+    }
+  }
+}
+
+/* Footer (保持之前的样式) */
 .footer-slide {
   height: auto !important;
   background-color: #0161ad;
   color: #fff;
-  padding: 15px 0; /* 保持紧凑高度 */
+  padding: 15px 0;
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
-  
-  /* 修改：极轻微的顶部内阴影，仅产生细腻的层级分界 */
   box-shadow: inset 0 4px 6px -1px rgba(0, 0, 0, 0.15);
   position: relative;
   z-index: 10;
   
   .footer-container {
     width: 100%;
-    /* 移除毛玻璃背景相关样式 */
     text-align: center;
 
     .copyright {
       color: rgba(255, 255, 255, 0.9);
-      font-size: 12px; /* 字体调小 */
+      font-size: 12px;
       font-weight: 400;
-      margin-bottom: 5px; /* 间距调小 */
+      margin-bottom: 5px;
     }
     
     .beian-info {
@@ -171,12 +403,11 @@ onMounted(async () => {
         color: rgba(255, 255, 255, 0.8);
         text-decoration: none;
         transition: all 0.3s ease;
-        display: inline-block; /* 允许 transform 生效 */
+        display: inline-block;
 
-        /* 仅超链接添加悬浮效果 */
         &:hover {
           color: #fff;
-          transform: translateY(-2px); /* 上浮幅度微调 */
+          transform: translateY(-2px);
           text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
       }
@@ -187,167 +418,6 @@ onMounted(async () => {
       
       .divider {
         color: rgba(255, 255, 255, 0.4);
-      }
-    }
-  }
-}
-
-.page {
-  text-align: center;
-  height: 100px;
-  h3,
-  p {
-    font-size: 40px;
-    font-weight: 400;
-    color: #fff;
-  }
-}
-
-.slogan {
-  text-align: center;
-  font-size: 50px;
-  color: #fff;
-  padding: 30px 0;
-}
-
-.case-item {
-  width: 1100px;
-  height: 500px;
-  overflow: hidden;
-  margin: 30px auto 0;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  list-style: none;
-
-  li {
-    width: 330px;
-    height: 250px;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    margin: 5px;
-    position: relative;
-    overflow: hidden;
-
-    &:hover {
-      .case-item-hover {
-        opacity: 1;
-        transition: all 0.4s ease-in-out;
-      }
-    }
-  }
-}
-
-.case-item-hover {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  background-color: rgba(225, 56, 52, 0.7);
-  text-align: center;
-
-  .hover-title {
-    height: 50px;
-    color: #fff;
-    font-size: 18px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-weight: 400;
-    margin-top: 20px;
-  }
-  .bottom {
-    border-bottom: 1px solid #fff;
-    width: 60px;
-    margin: 0 auto;
-  }
-  .more {
-    width: 90px;
-    padding: 5px;
-    margin: 100px auto 0;
-    border: 2px solid #fff;
-    span {
-      color: #fff;
-      font-size: 20px;
-    }
-  }
-}
-
-.slide-one {
-  background: url(../assets/img/home_top.jpg) no-repeat center;
-  background-size: cover;
-}
-.slide-two {
-  background: url(../assets/img/home_do.jpg) no-repeat center;
-  background-size: cover;
-}
-.slide-three {
-  background: url(../assets/img/home_anli.jpg) no-repeat center;
-  background-size: cover;
-}
-
-.news-content {
-  width: 1240px;
-  margin: 40px auto 0;
-  display: flex;
-  justify-content: center;
-
-  &-item {
-    width: 400px;
-    display: flex;
-    flex-direction: column;
-
-    .item-img {
-      width: 360px;
-      height: 230px;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center;
-      margin: 0 auto;
-    }
-    .el-divider {
-      background-color: transparent;
-      border-top: 3px solid #fff;
-      margin: 20px 0;
-      .el-icon {
-        color: #fff;
-        font-size: 20px;
-      }
-    }
-    .item-content {
-      width: 360px;
-      height: 230px;
-      margin: 0 auto;
-      h3 {
-        font-size: 22px;
-        height: 30px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-      p {
-        font-size: 15px;
-        height: 80px;
-        overflow: hidden;
-        margin: 10px 0;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 4;
-        -webkit-box-orient: vertical;
-        word-wrap: break-word;
-      }
-      span {
-        display: block;
-        font-size: 14px;
-        text-align: end;
-      }
-      h3,
-      p,
-      span {
-        color: #fff;
       }
     }
   }

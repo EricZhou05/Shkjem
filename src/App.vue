@@ -41,27 +41,15 @@ body {
   color: #2c3e50;
 }
 
+/* 隐藏 Header，实现全屏沉浸式 */
 .el-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 1240px;
-  margin: 0 auto;
-  height: 60px;
-
-  .logo {
-    width: 280px;
-    padding: 10px;
-    img {
-      width: 100%;
-      display: block;
-    }
-  }
+  display: none !important;
 }
+
 .el-main {
   padding: 0 !important;
-  /* 确保 main 区域占满剩余高度，由内部组件控制滚动 */
-  height: calc(100vh - 60px); 
+  /* 占满全屏 */
+  height: 100vh; 
   overflow: hidden;
 }
 </style>
