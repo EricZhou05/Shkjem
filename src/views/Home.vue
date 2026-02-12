@@ -65,10 +65,11 @@
 
       <swiper-slide class="swiper-slide footer-slide">
         <div class="footer-container">
-          <p>Copyright © 2026 科建股份 版权所有</p>
-          <div class="beian">
-            <span>沪ICP备2023000000号-1</span>
-            <span class="police-beian">沪公网安备 31011002000000号</span>
+          <p class="copyright">Copyright © 2026 科建股份 版权所有</p>
+          <div class="beian-info">
+            <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">粤ICP备2024000001号</a>
+            <span class="divider">|</span>
+            <span class="police-beian">粤公网安备 44030002000001号</span>
           </div>
         </div>
       </swiper-slide>
@@ -135,33 +136,58 @@ onMounted(async () => {
 }
 
 .footer-slide {
-  height: auto !important; // Footer 高度自适应
-  background-color: #125688;
+  height: auto !important;
+  background-color: #0161ad;
   color: #fff;
-  padding: 20px 0;
+  padding: 30px 0; /* 缩减高度 */
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  
+  /* 新增：区分顶部的阴影和边框 */
+  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.15);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 10;
   
   .footer-container {
+    width: 100%;
+    /* 移除毛玻璃背景相关样式 */
     text-align: center;
-    font-size: 14px;
-    
-    p {
-      margin-bottom: 10px;
+
+    .copyright {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 14px;
+      font-weight: 400;
+      margin-bottom: 12px;
     }
     
-    .beian {
+    .beian-info {
       display: flex;
       justify-content: center;
-      gap: 20px;
+      align-items: center;
+      gap: 15px;
+      font-size: 12px;
+      flex-wrap: wrap;
       
-      span {
-        cursor: pointer;
+      a {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-block; /* 允许 transform 生效 */
+
+        /* 仅超链接添加悬浮效果 */
         &:hover {
-          text-decoration: underline;
+          color: #fff;
+          transform: translateY(-3px);
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
       }
+
+      span {
+        color: rgba(255, 255, 255, 0.8);
+      }
       
-      .police-beian {
-        // 如果有图标可以在这里加 before 伪元素
+      .divider {
+        color: rgba(255, 255, 255, 0.4);
       }
     }
   }
