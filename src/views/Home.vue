@@ -1,5 +1,22 @@
 <template>
   <div class="home">
+    <!-- 悬浮 Header -->
+    <header class="header-nav">
+      <div class="logo">
+        <img src="@/assets/img/toplogo.png" alt="logo" />
+      </div>
+      <el-menu
+        :default-active="activeMenuIndex"
+        class="el-menu-demo"
+        mode="horizontal"
+        @select="handleSelect"
+      >
+        <el-menu-item index="0">首页</el-menu-item>
+        <el-menu-item index="1">核心愿景</el-menu-item>
+        <el-menu-item index="2">联系我们</el-menu-item>
+      </el-menu>
+    </header>
+
     <swiper
       :direction="'vertical'"
       :slidesPerView="'auto'"
@@ -8,6 +25,8 @@
       :modules="modules"
       class="mySwiper"
       :style="{ height: swiperHeight + 'px' }"
+      @swiper="onSwiper"
+      @slideChange="onSlideChange"
     >
       <!-- 第一页：品牌形象 -->
       <swiper-slide class="swiper-slide main-slide slide-brand">
@@ -107,6 +126,28 @@ const imgserver = proxy.imgserver
 
 const modules = [Mousewheel, Pagination]
 const swiperHeight = ref(window.innerHeight)
+const swiperInstance = ref(null)
+const activeMenuIndex = ref('0')
+
+// Swiper 初始化回调
+const onSwiper = (swiper) => {
+  swiperInstance.value = swiper
+}
+
+// 页面切换回调，同步更新菜单高亮
+const onSlideChange = (swiper) => {
+  // Footer 是第 3 页 (index 3)，但菜单只有 0, 1, 2
+  // 如果滑到 footer，保持在 "联系我们" 高亮
+  const index = swiper.activeIndex > 2 ? 2 : swiper.activeIndex
+  activeMenuIndex.value = index.toString()
+}
+
+// 菜单点击回调，控制 Swiper 跳转
+const handleSelect = (key) => {
+  if (swiperInstance.value) {
+    swiperInstance.value.slideTo(parseInt(key))
+  }
+}
 
 // 响应式调整高度
 onMounted(() => {
@@ -121,8 +162,85 @@ onMounted(() => {
 .home {
   font-family: "Source Han Sans CN", "PingFang SC", "Microsoft YaHei", sans-serif;
   color: #fff;
+  position: relative;
+  height: 100vh;
+  width: 100%;
 }
 
+/* Header 悬浮样式 */
+.header-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  z-index: 100;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 50px;
+  box-sizing: border-box;
+
+  opacity: 0;
+  transform: translateY(-100%);
+  animation: headerSlideDown 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation-delay: 0.5s;
+
+  .logo {
+    width: 200px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    
+    img {
+      max-height: 50px;
+      display: block;
+    }
+  }
+
+  .el-menu-demo {
+    background-color: transparent !important;
+    border-bottom: none !important;
+    width: 400px; /* 限制宽度 */
+    display: flex;
+    justify-content: flex-end;
+    
+    .el-menu-item {
+      background-color: transparent !important;
+      color: rgba(255, 255, 255, 0.7) !important;
+      font-size: 16px;
+      font-weight: 300;
+      padding: 0 20px;
+      
+      &:hover, &.is-active {
+        color: #fff !important;
+        font-weight: 500;
+        
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 20px;
+          height: 2px;
+          background-color: #E0C38C;
+        }
+      }
+      border-bottom: none !important; 
+    }
+  }
+}
+
+@keyframes headerSlideDown {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Swiper 样式 */
 .mySwiper {
   width: 100%;
 }
