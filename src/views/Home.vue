@@ -102,6 +102,11 @@
         </div>
       </swiper-slide>
     </swiper>
+
+    <!-- 极简下滑引导箭头 (全局) -->
+    <div class="scroll-guide" v-show="showArrow" @click="slideToNext">
+      <div class="arrow"></div>
+    </div>
   </div>
 </template>
 
@@ -126,6 +131,7 @@ const modules = [Mousewheel]
 const swiperHeight = ref(window.innerHeight)
 const swiperInstance = ref(null)
 const activeMenuIndex = ref('0')
+const showArrow = ref(true)
 
 // Swiper 初始化回调
 const onSwiper = (swiper) => {
@@ -138,6 +144,16 @@ const onSlideChange = (swiper) => {
   // 如果滑到 footer，保持在 "联系我们" 高亮
   const index = swiper.activeIndex > 2 ? 2 : swiper.activeIndex
   activeMenuIndex.value = index.toString()
+  
+  // 仅第一、二页显示箭头 (Index 0, 1)
+  showArrow.value = swiper.activeIndex < 2
+}
+
+// 箭头点击回调
+const slideToNext = () => {
+  if (swiperInstance.value) {
+    swiperInstance.value.slideNext()
+  }
 }
 
 // 菜单点击回调，控制 Swiper 跳转
@@ -337,6 +353,47 @@ onMounted(() => {
     letter-spacing: 12px;
     color: #E0C38C; /* 淡金色 */
     text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  }
+}
+
+/* 下滑引导动画 - 全局 */
+.scroll-guide {
+  position: absolute;
+  bottom: 6%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 90; /* 确保在 Swiper 之上 */
+  opacity: 0;
+  animation: guideFadeIn 1s ease-out 1.5s forwards;
+  cursor: pointer;
+  transition: opacity 0.5s; /* 显隐过渡 */
+
+  .arrow {
+    width: 20px;
+    height: 20px;
+    border-right: 2px solid #E0C38C;
+    border-bottom: 2px solid #E0C38C;
+    transform: rotate(45deg);
+    animation: arrowSlide 2s infinite;
+    box-sizing: border-box;
+  }
+}
+
+@keyframes guideFadeIn {
+  to { opacity: 1; }
+}
+
+@keyframes arrowSlide {
+  0% {
+    transform: rotate(45deg) translate(-5px, -5px);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(45deg) translate(5px, 5px);
+    opacity: 0;
   }
 }
 
