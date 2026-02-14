@@ -95,7 +95,7 @@
         <div class="footer-container">
           <p class="copyright">Copyright © 2021 - 2026 中山市盛裕科技有限公司 版权所有</p>
           <div class="beian-info">
-            <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">粤ICP备2026xxxxxx号</a>
+            <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">粤ICP备2026018457号</a>
             <span class="divider">|</span>
             <span class="police-beian">粤公网安备 44030002xxxxxx号</span>
           </div>
