@@ -584,4 +584,150 @@ onMounted(() => {
     }
   }
 }
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  /* Header 适配 */
+  .header-nav {
+    padding: 0 20px;
+    height: 60px;
+    
+    .logo {
+      width: 120px;
+      img {
+        max-height: 35px;
+      }
+    }
+
+    .el-menu-demo {
+      width: auto;
+      flex: 1;
+      justify-content: flex-end;
+      
+      .el-menu-item {
+        padding: 0 10px;
+        font-size: 14px;
+        
+        &:hover, &.is-active {
+          &::after {
+            bottom: 15px;
+            width: 15px;
+          }
+        }
+      }
+    }
+  }
+
+  /* 第一页适配 */
+  .slide-brand {
+    .main-title {
+      font-size: 32px;
+      letter-spacing: 2px;
+      padding: 0 20px;
+    }
+
+    .sub-title {
+      font-size: 16px;
+      letter-spacing: 4px;
+    }
+  }
+
+  /* 第二页适配 */
+  .slide-vision {
+    .vision-container {
+      width: 100%;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 20px 20px;
+      box-sizing: border-box;
+    }
+
+    .vision-card {
+      margin-bottom: 30px;
+      transform: translateY(30px);
+
+      .vision-icon {
+        font-size: 36px;
+        margin-bottom: 15px;
+      }
+
+      h3 {
+        font-size: 18px;
+        margin-bottom: 8px;
+      }
+
+      p {
+        font-size: 14px;
+        max-width: 100%;
+      }
+    }
+  }
+
+  /* 第三页适配 */
+  .slide-contact {
+    .contact-wrapper {
+      flex-direction: column;
+    }
+
+    .contact-left {
+      width: 100% !important;
+      height: 60%;
+      padding-top: 60px;
+    }
+
+    .contact-right {
+      width: 100%;
+      height: 40%;
+    }
+
+    &.swiper-slide-active .contact-left {
+      width: 100% !important;
+    }
+
+    .contact-content {
+      min-width: unset;
+      max-width: 100%;
+      padding: 0 30px;
+
+      h2 {
+        font-size: 40px;
+        margin-bottom: -20px;
+      }
+
+      h3 {
+        font-size: 20px;
+        white-space: normal;
+      }
+
+      .en-name {
+        font-size: 12px;
+        margin-bottom: 30px;
+      }
+
+      .info-item {
+        margin-bottom: 15px;
+
+        .val {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  /* Footer 适配 */
+  .footer-slide {
+    padding: 20px 10px;
+    
+    .footer-container {
+      .beian-info {
+        gap: 5px;
+        flex-direction: column;
+        
+        .divider {
+          display: none;
+        }
+      }
+    }
+  }
+}
 </style>
