@@ -657,8 +657,8 @@ onMounted(() => {
     }
 
     .el-menu-demo {
-      width: auto;
-      flex: 1;
+      width: 60px;
+      flex: none;
       justify-content: flex-end;
       
       .el-menu-item {
