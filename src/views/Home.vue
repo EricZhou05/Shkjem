@@ -678,14 +678,16 @@ onMounted(() => {
   /* 第一页适配 */
   .slide-brand {
     .main-title {
-      font-size: 32px;
+      font-size: 8.5vw; /* 使用视口宽度单位实现等比例缩放 */
       letter-spacing: 2px;
-      padding: 0 20px;
+      padding: 0 10px;
+      white-space: nowrap; /* 强制不换行 */
     }
 
     .sub-title {
-      font-size: 16px;
+      font-size: 3.5vw;
       letter-spacing: 4px;
+      white-space: nowrap; /* 强制不换行 */
     }
   }
 
